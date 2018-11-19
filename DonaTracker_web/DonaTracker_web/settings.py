@@ -72,6 +72,7 @@ TEMPLATES = [
     },
 ]
 
+
 STATICFILES_DIRS = [STATIC_DIR, ]
 
 WSGI_APPLICATION = 'DonaTracker_web.wsgi.application'
