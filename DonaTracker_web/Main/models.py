@@ -4,10 +4,10 @@ import uuid
 
 #user
 class UserProfile(models.Model):
-    REGULAR_USER = 'U'
-    LOCATION_EMPLOYEE = 'L'
-    MANAGER = 'M'
-    ADMIN = 'A'
+    REGULAR_USER = 'Uset'
+    LOCATION_EMPLOYEE = 'Location Employee'
+    MANAGER = 'Manager'
+    ADMIN = 'Admin'
     USER_TYPE_CHOICES = (
         (REGULAR_USER, 'Regular User'),
         (LOCATION_EMPLOYEE, 'Location Employee'),

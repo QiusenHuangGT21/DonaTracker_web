@@ -20,5 +20,6 @@ from Main import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^registration/', views.registration, name='registration'),
+    url(r'^login/', views.user_login, name = 'login'),
     url(r'^$', views.index, name='index'),
 ]

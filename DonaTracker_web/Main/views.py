@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from Main.models import UserProfile
 from Main.forms import UserForm, UserProfileForm
 
@@ -39,3 +40,22 @@ def registration(request):
         , "registered": registered, }
 
     return render(request, 'Main/registration.html', context=context_dict)
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username = username, password = password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse("Logged in:" + user.get_username() 
+                    + UserProfile.objects.get(user=user).user_type)
+            else:
+                return HttpResponse('Your account is deasbled.')
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'Main/login.html', {})
