@@ -1,12 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
-from enum import Enum
 import uuid
 
 #user
 class UserProfile(models.Model):
+    REGULAR_USER = 'U'
+    LOCATION_EMPLOYEE = 'L'
+    MANAGER = 'M'
+    ADMIN = 'A'
+    USER_TYPE_CHOICES = (
+        (REGULAR_USER, 'Regular User'),
+        (LOCATION_EMPLOYEE, 'Location Employee'),
+        (MANAGER, 'Manager'),
+        (ADMIN, 'Admin'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_type = models.CharField(max_length = 60, default = "Regular User")
+    user_type = models.CharField(max_length = 1, 
+        choices = USER_TYPE_CHOICES,
+        default = REGULAR_USER,)
 
     def __str__(self):
         return self.user.username
