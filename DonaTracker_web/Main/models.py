@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_type = models.CharField(max_length = 1, 
+    user_type = models.CharField(max_length = 20, 
         choices = USER_TYPE_CHOICES,
         default = REGULAR_USER,)
 
@@ -28,16 +28,16 @@ class Location(models.Model):
     uuid = models.UUIDField(primary_key=True, 
         default=uuid.uuid4, 
         editable = False)
+    key = models.IntegerField(default=-1)
     name = models.CharField(max_length = 128, default = "(name)")
     lat = models.DecimalField(max_digits= 20, decimal_places=17, default = 0.0)
     lng = models.DecimalField(max_digits= 20, decimal_places=17, default = 0.0)
-    street = models.CharField(max_length = 128, default = "(street)")
-    address = models.CharField(max_length = 128, default = "(address")
+    street_address = models.CharField(max_length = 128, default = "(street address)")
     city = models.CharField(max_length = 20, default = "(city)")
-    State = models.CharField(max_length = 10, default = "(state)")
+    state = models.CharField(max_length = 10, default = "(state)")
     zip = models.IntegerField(default=99999)
     type = models.CharField(max_length = 64, default = "default type")
-    phone = models.IntegerField(default=0)
+    phone = models.CharField(max_length = 20, default = "(phone)")
     website = models.CharField(max_length = 128, default = "(website)")
     employees = models.ManyToManyField(User)
 
