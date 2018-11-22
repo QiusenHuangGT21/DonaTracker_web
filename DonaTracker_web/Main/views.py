@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import authenticate, login, logout
 from Main.models import UserProfile, Location, Donation
-from Main.forms import UserForm, UserProfileForm, LocationForm
+from Main.forms import UserForm, UserProfileForm, LocationForm, DonationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse 
@@ -131,5 +131,24 @@ def show_donations(request, location_slug):
             context_dict['donations'] = donations
         except Location.DoesNotExist:
             context_dict['donations'] = None
-    
+    if context_dict['current_user_type'] in ['Location Employee', 'Manager', 'Admin']:
+        context_dict['can_add_donation'] = True
+    else:        
+        context_dict['can_add_donation'] = False
     return render(request, 'Main/donations.html', context=context_dict)
+
+def add_donation(request, location_slug):
+    if request.method == 'POST':
+        donation_form = DonationForm(data = request.POST)
+        if donation_form.is_valid():
+            donation = donation_form.save()
+            donation.location = Location.objects.get(slug = location_slug)
+            donation.save()
+            return HttpResponseRedirect('/dashboard')
+        else:
+            print(donation_form.errors)
+    else:
+        context_dict = __init_dict(request.user)
+        context_dict['location'] = Location.objects.get(slug = location_slug)
+        context_dict['donation_form'] = DonationForm()
+        return render(request, 'Main/add_donation.html', context = context_dict)

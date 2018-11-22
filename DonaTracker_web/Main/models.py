@@ -54,7 +54,7 @@ class Location(models.Model):
 class Donation(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     date = models.DateField(auto_now_add=True, editable = False)
-    location = models.ForeignKey(Location)
+    location = models.ForeignKey(Location, blank=True, null=True)
     short_description = models.CharField(max_length = 20, default = "short description")
     full_description = models.CharField(max_length = 256, default = "full description")
     value = models.DecimalField(max_digits = 10, decimal_places = 2, default = 0.0)

@@ -21,6 +21,11 @@
             No donation yet
             {% endif %}
         </ul>
+        {% if can_add_donation %}
+            <hr/>
+            <a href="/add-donation/{{ location.slug }}">Add Donation</a>
+        {% else %}
+        {% endif %}
     {% else %}
     Location not found
     {% endif %}

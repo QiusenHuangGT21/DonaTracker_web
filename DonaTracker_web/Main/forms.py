@@ -16,11 +16,15 @@ class UserProfileForm(forms.ModelForm):
         fields = ('user_type',)
 
 class LocationForm(forms.ModelForm):
-    
+    name = forms.CharField(required = True)
     class Meta:
         model = Location
         fields = ("name","street_address","city","state",'zip','type', 'phone', "website")
     
+class DonationForm(forms.ModelForm):
 
+    class Meta:
+        model = Donation
+        fields = ('short_description', 'full_description', 'value', 'category')
 
 

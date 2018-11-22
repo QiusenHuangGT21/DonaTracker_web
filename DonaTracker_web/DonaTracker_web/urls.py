@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^dashboard/', views.show_dashboard, name = 'dashboard'),
     url(r'^location-view/(?P<location_slug>[\w\-]+)/', views.show_location_detail, name = 'location_detail'),
     url(r'^donation-view/(?P<location_slug>[\w\-]+)/', views.show_donations, name = 'donation_list'),
+     url(r'^add-donation/(?P<location_slug>[\w\-]+)/', views.add_donation, name = 'add_donation'),
     url(r'^add-location/', views.add_location, name = 'add_location'),
     url(r'^$', views.index, name='index'),
 ]
