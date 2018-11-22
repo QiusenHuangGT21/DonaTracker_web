@@ -1,0 +1,28 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    
+{% endblock title_block %}
+
+{% block body_block %}
+    {% if location %}
+        <ul>
+            <li>Location: {{location.name}}</li>
+            {% if donations %}
+                {% for d in donations %}
+                    <hr />
+                    <li>Short description: {{d.short_description}}</li>
+                    <li>Full description: {{d.full_description}}</li>
+                    <li>Value: {{d.value}}</li>
+                    <li>Category: {{d.category}}</li>
+                {% endfor %}
+            {% else %}
+            No donation yet
+            {% endif %}
+        </ul>
+    {% else %}
+    Location not found
+    {% endif %}
+    
+{% endblock body_block %}

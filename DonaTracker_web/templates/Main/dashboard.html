@@ -1,0 +1,18 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    
+{% endblock title_block %}
+
+{% block body_block %}
+    {% if locations %}
+        <ul>
+            {% for location in locations %}
+                <li><a href="/location-view/{{ location.slug }}">{{location.name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    No Location yet
+    {% endif %}
+{% endblock body_block %}

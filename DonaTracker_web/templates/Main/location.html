@@ -1,0 +1,27 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    
+{% endblock title_block %}
+
+{% block body_block %}
+    {% if location %}
+        <ul>
+            <li>Name: {{location.name}}</li>
+            <li>Latitude: {{location.lat}}</li>
+            <li>Longitude: {{location.lng}}</li>
+            <li>Street address: {{location.street_address}}</li>
+            <li>City: {{location.city}}</li>
+            <li>State: {{location.state}}</li>
+            <li>Zip: {{location.zip}}</li>
+            <li>Type: {{location.type}}</li>
+            <li>Phone: {{location.phone}}</li>
+            <li>Website: <a href="https://{{ location.website }}">{{location.name}}</a></li>
+            <li><a href="/donation-view/{{ location.slug }}">View Donations</a></li>
+        </ul>
+    {% else %}
+    Location not found
+    {% endif %}
+    
+{% endblock body_block %}
