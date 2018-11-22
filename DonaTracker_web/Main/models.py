@@ -57,7 +57,7 @@ class Donation(models.Model):
     location = models.ForeignKey(Location)
     short_description = models.CharField(max_length = 20, default = "short description")
     full_description = models.CharField(max_length = 256, default = "full description")
-    value = models.DecimalField(max_digits = 10, decimal_places = 2)
+    value = models.DecimalField(max_digits = 10, decimal_places = 2, default = 0.0)
     category = models.CharField(max_length = 128, default = "default")
     
     def __str__(self):

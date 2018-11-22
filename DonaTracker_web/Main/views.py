@@ -95,3 +95,21 @@ def show_location_detail(request, location_slug):
         context_dict['location'] = None
     
     return render(request, 'Main/location.html', context=context_dict)
+
+def show_donations(request, location_slug):
+    context_dict = __init_dict(request.user)
+    try:
+        location = Location.objects.get(slug = location_slug)
+        # donations = Donation.objects.get(location = location)
+        context_dict['location'] = location
+    except Location.DoesNotExist:
+        context_dict['location'] = None
+    
+    if context_dict['location']:
+        try:
+            donations = Donation.objects.filter(location = context_dict['location'])
+            context_dict['donations'] = donations
+        except Location.DoesNotExist:
+            context_dict['donations'] = None
+    
+    return render(request, 'Main/donations.html', context=context_dict)

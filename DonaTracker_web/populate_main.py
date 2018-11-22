@@ -8,38 +8,9 @@ from Main.models import Location, Donation
 import random
 import csv
 
+donation_names = ['donation1', 'donation2', 'donation3']
+
 def populate():
-    # First, we will create lists of dictionaries containing the pages
-    # we want to add into each category.
-    # Then we will create a dictionary of dictionaries for our categories.
-    # This might seem a little bit confusing, but it allows us to iterate
-    # through each data structure, and add the data to our models.
-    
-    # python_pages = [
-    #     {"title": "Official Python Tutorial",
-    #      "url":"http://docs.python.org/2/tutorial/"},
-    #     {"title":"How to Think like a Computer Scientist",
-    #      "url":"http://www.greenteapress.com/thinkpython/"},
-    #     {"title":"Learn Python in 10 Minutes",
-    #      "url":"http://www.korokithakis.net/tutorials/python/"} ]
-    
-    # django_pages = [
-    #     {"title":"Official Django Tutorial",
-    #      "url":"https://docs.djangoproject.com/en/1.9/intro/tutorial01/"},
-    #     {"title":"Django Rocks",
-    #      "url":"http://www.djangorocks.com/"},
-    #     {"title":"How to Tango with Django",
-    #      "url":"http://www.tangowithdjango.com/"} ]
-    
-    # other_pages = [
-    #     {"title":"Bottle",
-    #      "url":"http://bottlepy.org/docs/dev/"},
-    #     {"title":"Flask",
-    #      "url":"http://flask.pocoo.org"} ]
-    
-    # cats = {"Python": {"pages": python_pages},
-    #         "Django": {"pages": django_pages},
-    #         "Other Frameworks": {"pages": other_pages} }
 
     with open('location_data.csv') as file:
         data = []
@@ -53,16 +24,11 @@ def populate():
     for location in data:
         add_location(location)
         print("add " + location[1] + " to database")
-
-    # for cat, cat_data in cats.items():
-    #     c = add_cat(cat)
-    #     for p in cat_data["pages"]:
-    #         add_page(c, p["title"], p["url"])
     
-    # # Print out the categories we have added.
-    # for c in Category.objects.all():
-    #     for p in Page.objects.filter(category=c):
-    #         print("- {0} - {1}".format(str(c), str(p)))
+    first_location = Location.objects.all()[0]
+
+    for name in donation_names:
+        add_donation(first_location, name)
 
 def add_location(location_list):
     l = Location.objects.get_or_create(name = location_list[1])[0]
@@ -80,23 +46,15 @@ def add_location(location_list):
     l.employees.add()
     l.save()
     return l
-    
 
-# def add_page(cat, title, url):
-#     p = Page.objects.get_or_create(category=cat, title=title)[0]
-#     p.url=url
-#     random.seed(str(url))
-#     p.views = random.randint(0,150)
-#     p.save()
-#     return p
+def add_donation(location_key, name):
+    d = Donation.objects.get_or_create(short_description = name, location = location_key)[0]
+    d.full_description = 'This is ' + name
+    d.value = random.randint(10, 100) / 7.0
+    d.save()
+    return d
 
-# def add_cat(name):
-#     c = Category.objects.get_or_create(name=name)[0]
-#     c.slug = slugify(name)
-#     c.save()
-#     return c
 
-# Start execution here!
 if __name__ == '__main__':
     print("Starting Main population script...")
     populate()

@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^index/', views.index, name = 'index'),
     url(r'^dashboard/', views.show_dashboard, name = 'dashboard'),
     url(r'^location-view/(?P<location_slug>[\w\-]+)/', views.show_location_detail, name = 'location_detail'),
+    url(r'^donation-view/(?P<location_slug>[\w\-]+)/', views.show_donations, name = 'donation_list'),
     url(r'^$', views.index, name='index'),
 ]
