@@ -1,9 +1,17 @@
-<!DOCTYPE html>
+{% extends "Main/base.html" %}
 {% load staticfiles %}
-<html>
-    <h1>Welcome</h1>
-    <br>
-    <a href="/registration">Sign Up</a>
-    <br>
-    <a href="/login">Sign In</a>
-</html>
+
+{% block title_block %}
+    
+{% endblock title_block %}
+
+{% block body_block %}
+    <ul>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Log Out</a></li> 
+        {% else %}
+            <li><a href="{% url 'login' %}">Sign In</a></li>
+            <li><a href="{% url 'registration' %}">Sign Up</a></li>
+        {% endif %}
+    </ul>
+{% endblock body_block %}

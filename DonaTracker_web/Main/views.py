@@ -1,15 +1,25 @@
 from django.shortcuts import render
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth import authenticate, login, logout
 from Main.models import UserProfile
 from Main.forms import UserForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 from django.http import HttpResponse 
 
 def index(request):
-    return render(request, 'Main/index.html', context=None)
+    current_user = request.user
+    context_dict = {}
+    if not current_user.is_anonymous():
+        try:
+            current_user_type = UserProfile.objects.get(user = current_user).user_type
+        except UserProfile.DoesNotExist:
+            current_user_type = "Super Admin"
+        context_dict = {'current_user_type': current_user_type}
+    return render(request, 'Main/index.html', context=context_dict)
 
 def registration(request):
     registered = False
@@ -50,8 +60,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponse("Logged in:" + user.get_username() 
-                    + UserProfile.objects.get(user=user).user_type)
+                return HttpResponseRedirect('/index')
             else:
                 return HttpResponse('Your account is deasbled.')
         else:
@@ -59,3 +68,9 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'Main/login.html', {})
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/index')
+    

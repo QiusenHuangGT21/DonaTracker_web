@@ -15,5 +15,10 @@
             {% endblock %} 
         </div> 
         <hr />
+        {% if user.is_authenticated %}
+                Logged in as: {{user.get_username}} -- {{current_user_type}}
+        {% else %}
+            <h5>Your status: Guest</h5>
+        {% endif %}
     </body> 
 </html>
