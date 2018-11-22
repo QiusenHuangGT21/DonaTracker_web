@@ -23,5 +23,7 @@ urlpatterns = [
     url(r'^login/', views.user_login, name = 'login'),
     url(r'^logout/', views.user_logout, name = 'logout'),
     url(r'^index/', views.index, name = 'index'),
+    url(r'^dashboard/', views.show_dashboard, name = 'dashboard'),
+    url(r'^location-view/(?P<location_slug>[\w\-]+)/', views.show_location_detail, name = 'location_detail'),
     url(r'^$', views.index, name='index'),
 ]

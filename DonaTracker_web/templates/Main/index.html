@@ -8,8 +8,9 @@
 {% block body_block %}
     <ul>
         {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Log Out</a></li> 
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li> 
         {% else %}
+            <li><a href="{% url 'dashboard' %}">Continue as guest</a></li> 
             <li><a href="{% url 'login' %}">Sign In</a></li>
             <li><a href="{% url 'registration' %}">Sign Up</a></li>
         {% endif %}

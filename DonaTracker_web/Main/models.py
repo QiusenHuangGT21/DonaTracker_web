@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 import uuid
 
 #user
@@ -40,6 +41,11 @@ class Location(models.Model):
     phone = models.CharField(max_length = 20, default = "(phone)")
     website = models.CharField(max_length = 128, default = "(website)")
     employees = models.ManyToManyField(User)
+    slug = models.SlugField(unique=True, default = "unsaved")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.uuid)
+        super(Location, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
