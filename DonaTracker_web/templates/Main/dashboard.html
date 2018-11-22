@@ -15,4 +15,8 @@
     {% else %}
     No Location yet
     {% endif %}
+    {% if can_add_location %}
+        <a href="{% url 'add_location' %}">Add Location</a>
+    {% else %}
+    {% endif %}
 {% endblock body_block %}

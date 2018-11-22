@@ -1,0 +1,16 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+
+{% endblock title_block %}
+
+{% block body_block %}
+    <h1>Add Location</h1>
+    <form id="location_form" method="post" action="{% url 'add_location' %}"> 
+         {% csrf_token %} <!-- Display each form --> 
+         {{ location_form.as_p }} 
+         <!-- Provide a button to click to submit the form. --> 
+         <input type="submit" name="submit" value="Add Location" /> 
+         </form> 
+{% endblock body_block %}   

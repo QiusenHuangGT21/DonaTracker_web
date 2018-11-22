@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import authenticate, login, logout
 from Main.models import UserProfile, Location, Donation
-from Main.forms import UserForm, UserProfileForm
+from Main.forms import UserForm, UserProfileForm, LocationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse 
@@ -16,7 +16,7 @@ def __init_dict(u):
         except UserProfile.DoesNotExist:
             current_user_type = "Super Admin"
         return {'current_user_type': current_user_type}
-    return {}
+    return {'current_user_type': "Guest"}
 
 def index(request):
     current_user = request.user
@@ -83,6 +83,11 @@ def show_dashboard(request):
     locations = Location.objects.all()
     context_dict['locations'] = locations
 
+    if context_dict['current_user_type'] in ['Location Employee', 'Manager', 'Admin']:
+        context_dict['can_add_location'] = True
+    else:        
+        context_dict['can_add_location'] = False
+
     return render(request, 'Main/dashboard.html', context_dict)
 
 def show_location_detail(request, location_slug):
@@ -95,6 +100,21 @@ def show_location_detail(request, location_slug):
         context_dict['location'] = None
     
     return render(request, 'Main/location.html', context=context_dict)
+
+def add_location(request):
+    if request.method == 'POST':
+        location_form = LocationForm(data = request.POST)
+        if location_form.is_valid():
+            location = location_form.save()
+            location.save()
+            return HttpResponseRedirect('/dashboard')
+        else:
+            print(location_form.errors)
+    else:
+        context_dict = __init_dict(request.user)
+        context_dict['location_form'] = LocationForm()
+        return render(request, 'Main/add_location.html', context = context_dict)
+
 
 def show_donations(request, location_slug):
     context_dict = __init_dict(request.user)
