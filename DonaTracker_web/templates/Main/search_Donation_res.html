@@ -10,7 +10,10 @@
 {% if donations %}
 {% for donation in donations %}
     <div>
-       <h1>Donation: {{donation.short_description}}</h1>
+        <li>Short description: {{d.short_description}}</li>
+        <li>Full description: {{d.full_description}}</li>
+        <li>Value: {{d.value}}</li>
+        <li>Category: {{d.category}}</li>
     </div>
 {% endfor %}
 {% endif %}
