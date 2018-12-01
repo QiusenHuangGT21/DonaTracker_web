@@ -14,6 +14,12 @@
 {% for donation in donations %}
     <div>
        <h1>Donation: {{donation.short_description}}</h1>
+       <li>Location: {{donation.location.name}}</li>
+       <li>Short description: {{donation.short_description}}</li>
+                    <li>Full description: {{donation.full_description}}</li>
+                    <li>Value: {{donation.value}}</li>
+                    <li>Category: {{donation.category}}</li>
+                    <hr>
     </div>
 {% empty %}
   <div class="no-post">

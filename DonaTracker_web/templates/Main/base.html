@@ -15,12 +15,13 @@
             {% endblock %} 
         </div> 
         <hr />
+        <a href="/dashboard">Dashboard</a>
         {% if user.is_authenticated %}
                 Logged in as: {{user.get_username}} -- {{current_user_type}}
                 <br>
                 <a href="{% url 'logout' %}">Log Out</a>
         {% else %}
-            <h5>Your status: Guest</h5>
+            <h5>Your status: Guest</h5> 
         {% endif %}
     </body> 
 </html>
