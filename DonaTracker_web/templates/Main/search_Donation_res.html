@@ -1,0 +1,17 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+
+{% endblock title_block %}
+
+{% block body_block %}
+
+{% if donations %}
+{% for donation in donations %}
+    <div>
+       <h1>Donation: {{donation.short_description}}</h1>
+    </div>
+{% endfor %}
+{% endif %}
+{% endblock body_block %}   

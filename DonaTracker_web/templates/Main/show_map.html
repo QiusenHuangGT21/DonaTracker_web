@@ -1,0 +1,48 @@
+<html>
+    <style>
+        div.main {
+            height: 600px;
+            margin: auto;        
+        }
+    </style>
+<body>
+  <div class="main">
+  <div id="mapdiv"></div>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script>
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    {% for location in locations %}
+    var lonLat = new OpenLayers.LonLat( {{location.lng}} ,{{location.lat}} )
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+	var m1 = new OpenLayers.Marker(lonLat);
+  {% autoescape off %}
+    m1.icon.imageDiv.title = "{{location.name}}\n{{location.phone}}"
+{% endautoescape %}
+  markers.addMarker(m1);
+{% endfor %}
+    var zoom=10;
+    map.setCenter (lonLat, zoom);
+  </script>
+  </div>
+  <br>
+  Hover on pin to see details about the location
+  <br>
+  <a href="{% url 'dashboard' %}">Dashboard</a>
+  <br>
+  
+  <hr />
+        {% if user.is_authenticated %}
+                Logged in as: {{user.get_username}} -- {{current_user_type}}
+                <br>
+                <a href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+            <h5>Your status: Guest</h5>
+        {% endif %}
+</body>
+</html>

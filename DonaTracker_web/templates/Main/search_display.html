@@ -1,0 +1,22 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+
+{% endblock title_block %}
+
+{% block body_block %}
+    <h1>Seach Items within All Location</h1>
+    <form method="POST" action="{% url 'search_all_Location' %}">
+       {% csrf_token %}
+       <input type="search" name="name" placeholder="search Location" required>
+       <button type="submit">Search</button>
+    </form>
+
+    <h1>Seach Donation within All Location by Category</h1>
+    <form method="POST" action="{% url 'search_Donation_by_category' %}">
+       {% csrf_token %}
+       <input type="search" name="category" placeholder="search Donation by Category" required>
+       <button type="submit">Search</button>
+    </form>
+{% endblock body_block %}   
