@@ -29,4 +29,6 @@ urlpatterns = [
      url(r'^add-donation/(?P<location_slug>[\w\-]+)/', views.add_donation, name = 'add_donation'),
     url(r'^add-location/', views.add_location, name = 'add_location'),
     url(r'^$', views.index, name='index'),
+
+    url(r'^map-view/', views.show_map, name = 'show_map'),
 ]

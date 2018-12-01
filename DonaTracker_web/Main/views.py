@@ -152,3 +152,9 @@ def add_donation(request, location_slug):
         context_dict['location'] = Location.objects.get(slug = location_slug)
         context_dict['donation_form'] = DonationForm()
         return render(request, 'Main/add_donation.html', context = context_dict)
+
+def show_map(request):
+    context_dict = __init_dict(request.user)
+    locations = Location.objects.all()
+    context_dict['locations'] = locations
+    return render(request, "Main/show_map.html", context=context_dict)
