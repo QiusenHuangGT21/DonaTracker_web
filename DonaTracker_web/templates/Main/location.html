@@ -19,6 +19,13 @@
             <li>Phone: {{location.phone}}</li>
             <li>Website: <a href="https://{{ location.website }}">{{location.name}}</a></li>
             <li><a href="/donation-view/{{ location.slug }}">View Donations</a></li>
+        <h1>Seach Donation within this Location</h1>
+            <form method="POST" action="{% url 'search_Donation' %}">
+              {% csrf_token %}
+              <input type="hidden" name="location" value={{location.uuid}}>
+              <input type="search" name="name" placeholder="search Donation" required>
+              <button type="submit">Search</button>
+             </form>
         </ul>
     {% else %}
     Location not found
