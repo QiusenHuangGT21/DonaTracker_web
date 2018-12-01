@@ -11,6 +11,7 @@
             {% for location in locations %}
                 <li><a href="/location-view/{{ location.slug }}">{{location.name}}</a></li>
             {% endfor %}
+            <li><a href="/search_display/">Search</a></li>
         </ul>
     {% else %}
     No Location yet
@@ -19,4 +20,5 @@
         <a href="{% url 'add_location' %}">Add Location</a>
     {% else %}
     {% endif %}
+
 {% endblock body_block %}

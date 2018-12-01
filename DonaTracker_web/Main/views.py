@@ -7,6 +7,8 @@ from Main.forms import UserForm, UserProfileForm, LocationForm, DonationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse 
+from django.db.models import Q
+# import uuid
 # Create your views here.
 
 def __init_dict(u):
@@ -152,3 +154,80 @@ def add_donation(request, location_slug):
         context_dict['location'] = Location.objects.get(slug = location_slug)
         context_dict['donation_form'] = DonationForm()
         return render(request, 'Main/add_donation.html', context = context_dict)
+
+
+def search_display(request):
+    if request.method == 'GET':
+        return render(request, 'Main/search_display.html', context = {})
+
+
+def search_all_Location(request):
+    if request.method == 'POST':
+        error_msg = ''
+        name = request.POST.get('name')
+        donations = Donation.objects.filter(short_description = name)
+        return render(request, 'Main/search_Location_res.html', {'donations':donations})
+    else:
+        error_msg = 'Not POST method'
+        return render(request, 'Main/search_error.html')
+
+
+def search_Donation(request):
+    if request.method == 'POST':
+        error_msg = ''
+        location_uuid = request.POST.get('location')
+        print(location_uuid)
+        name = request.POST.get('name')
+        location = Location.objects.get(uuid = location_uuid)
+        all_donations = Donation.objects.filter(location = location)
+        real_donation_list = []
+        for donation in all_donations:
+            if donation.short_description == name:
+                real_donation_list.append(donation)
+        # print(donations)
+        return render(request, 'Main/search_Location_res.html', {'donations':real_donation_list})
+    else:
+        return render(request, 'Main/search_error.html')
+
+
+
+def search_Donation_by_category(request):
+    if request.method == 'POST':
+        error_msg = ''
+        name = request.POST.get('category')
+        donations = Donation.objects.filter(category = name)
+        return render(request, 'Main/search_Donation_by_cat_result.html', {'donations':donations})
+    else:
+        error_msg = 'Not POST method'
+        return render(request, 'Main/search_error.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

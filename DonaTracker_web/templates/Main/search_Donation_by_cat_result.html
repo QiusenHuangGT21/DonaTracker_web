@@ -1,0 +1,24 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+
+{% endblock title_block %}
+
+{% block body_block %}
+    {% if error_msg %}
+    <p>{{ error_msg }}</p>
+{% endif %}
+
+{% if donations %}
+{% for donation in donations %}
+    <div>
+       <h1>Donation: {{donation.short_description}}</h1>
+    </div>
+{% empty %}
+  <div class="no-post">
+    No thing find
+  </div>
+{% endfor %}
+{% endif %}
+{% endblock body_block %}   

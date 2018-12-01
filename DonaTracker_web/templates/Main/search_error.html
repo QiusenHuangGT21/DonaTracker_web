@@ -1,0 +1,12 @@
+{% extends "Main/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+
+{% endblock title_block %}
+
+{% block body_block %}
+    {% if error_msg %}
+    <p>{{ error_msg }}</p>
+{% endif %}
+{% endblock body_block %}   
