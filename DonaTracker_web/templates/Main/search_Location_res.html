@@ -11,6 +11,9 @@
 {% for donation in donations %}
     <div>
        <h1>Donation: {{donation.short_description}}</h1>
+       <li>Full description: {{donation.full_description}}</li>
+        <li>Value: {{donation.value}}</li>
+        <li>Category: {{donation.category}}</li>
     </div>
 {% endfor %}
 {% endif %}
