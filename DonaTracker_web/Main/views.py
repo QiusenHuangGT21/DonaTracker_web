@@ -7,8 +7,6 @@ from Main.forms import UserForm, UserProfileForm, LocationForm, DonationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse 
-from django.db.models import Q
-# import uuid
 # Create your views here.
 
 def __init_dict(u):
@@ -176,7 +174,6 @@ def search_Donation(request):
     if request.method == 'POST':
         error_msg = ''
         location_uuid = request.POST.get('location')
-        print(location_uuid)
         name = request.POST.get('name')
         location = Location.objects.get(uuid = location_uuid)
         all_donations = Donation.objects.filter(location = location)
@@ -189,8 +186,6 @@ def search_Donation(request):
     else:
         return render(request, 'Main/search_error.html')
 
-
-
 def search_Donation_by_category(request):
     if request.method == 'POST':
         error_msg = ''
@@ -201,33 +196,23 @@ def search_Donation_by_category(request):
         error_msg = 'Not POST method'
         return render(request, 'Main/search_error.html')
 
+def search_Donation_cat(request):
+    if request.method == 'POST':
+        error_msg = ''
+        location_uuid = request.POST.get('location')
+        cat = request.POST.get('category')
+        location = Location.objects.get(uuid = location_uuid)
+        all_donations = Donation.objects.filter(location = location)
+        real_donation_list = []
+        for donation in all_donations:
+            if donation.category == cat:
+                real_donation_list.append(donation)
+        return render(request, 'Main/search_Location_res.html', {'donations':real_donation_list})
+    else:
+        return render(request, 'Main/search_error.html')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def show_map(request):
+    context_dict = __init_dict(request.user)
+    locations = Location.objects.all()
+    context_dict['locations'] = locations
+    return render(request, "Main/show_map.html", context=context_dict)

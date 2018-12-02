@@ -19,20 +19,25 @@
             <li>Phone: {{location.phone}}</li>
             <li>Website: <a href="https://{{ location.website }}">{{location.name}}</a></li>
             <li><a href="/donation-view/{{ location.slug }}">View Donations</a></li>
-        
-
-            <h1>Seach Donation within this Location</h1>
+        <h1>Seach Donation within this Location</h1>
             <form method="POST" action="{% url 'search_Donation' %}">
               {% csrf_token %}
               <input type="hidden" name="location" value={{location.uuid}}>
               <input type="search" name="name" placeholder="search Donation" required>
               <button type="submit">Search</button>
              </form>
+
+
+        <h1>Seach Donation within this Location by category</h1>
+            <form method="POST" action="{% url 'search_Donation_cat' %}">
+              {% csrf_token %}
+              <input type="hidden" name="location" value={{location.uuid}}>
+              <input type="search" name="category" placeholder="search Donation by category" required>
+              <button type="submit">Search</button>
+             </form>
         </ul>
     {% else %}
     Location not found
     {% endif %}
-
-
     
 {% endblock body_block %}

@@ -90,4 +90,8 @@ db.sqlite3
 
 *.csv
 
+<<<<<<< HEAD
 *.vscode
+=======
+*.vscode
+>>>>>>> 2f6df6bf23e2c3d20e32b2ec4e6988b4ea06212d
