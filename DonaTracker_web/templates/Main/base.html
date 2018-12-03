@@ -21,7 +21,9 @@
                 <br>
                 <a href="{% url 'logout' %}">Log Out</a>
         {% else %}
-            <h5>Your status: Guest</h5> 
+        <br>
+            <strong>Your status: Guest     </strong> 
+            <a href="{% url 'login' %}">Sign In</a>
         {% endif %}
     </body> 
 </html>
